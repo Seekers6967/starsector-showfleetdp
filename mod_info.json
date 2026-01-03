@@ -1,12 +1,12 @@
 {
     "id":"show_prebattle_stats",
-    "name":"Show Pre-Battle Stats",
+    "name":"Show Encounter Stats",
     "author":"Albert Hiisky, Seekers",
     "version":"1.0.0",
-    "description":"Displays info about number of ships, DP, FP and +%EXP before battle.",
+    "description":"Displays info about number of ships, DP, FP and +%EXP before battle, among others.",
     "gameVersion":"0.98a-RC5",
     "totalConversion":false,
     "utility": "true",
-    "jars":["jars/ShowFleetDP.jar"],
-    "modPlugin":"ShowFleetDP.ShowFleetDPPlugin"
+    "jars":["jars/ShowEncounterStats.jar"],
+    "modPlugin":"ShowEncounterStats.ShowEncounterStatsPlugin"
 }
