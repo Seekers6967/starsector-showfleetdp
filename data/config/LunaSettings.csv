@@ -1,0 +1,5 @@
+fieldID,fieldName,fieldType,defaultValue,fieldDescription
+shortenDescriptions,Shorten Descriptions,Boolean,false,"If true, will just show ships instead of combat ships, DP instead of deployment points and FP instead of fleet strenght, along others."
+showCivFP,Show Civilian Fleet Strenght Contribution,Boolean,true,"Toggles whether the Fleet Strenght contributed by civilian ships is shown separately (if true, civilian ships will still not be counted as combat ships)"
+countCivShips,Count Civilian Ships as ships,Boolean,false,"Toggles whether civilian ships are counted as ships, by default false and specifies its only combat ships"
+showofficerCount,Show Officer Count and Levels,Boolean,true,Toggles whether to display how many officers and their average level in the enemy or supporting fleets.
