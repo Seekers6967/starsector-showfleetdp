@@ -96,16 +96,16 @@ public class ShowEncounterStatsListener extends BaseCampaignEventListener {
 
         if (showOfficers && s.officerCount > 0) {
             String officerLabel = (s.officerCount == 1) ? "officer" : "officers";
-            int avgLvl = Math.round((float) s.officerLevelSum / s.officerCount);
+			String avgLvlformatted = s.avgLvlformat;
 
             if (shorten) {
                 line.append(", ").append(s.officerCount)
                         .append(" ").append(officerLabel)
-                        .append(" (avg lvl ").append(avgLvl).append(")");
+                        .append(" (avg lvl ").append(avgLvlformatted).append(")");
             } else {
                 line.append(", ").append(s.officerCount)
                         .append(" ").append(officerLabel)
-                        .append(" (average level of ").append(avgLvl).append(")");
+                        .append(" (average level of ").append(avgLvlformatted).append(")");
             }
         }
 		
@@ -154,15 +154,21 @@ public class ShowEncounterStatsListener extends BaseCampaignEventListener {
             }
 
             PersonAPI captain = member.getCaptain();
+			int memberLvl = captain.getStats().getLevel();
 			if (captain != null
+					&& memberLvl > 0
 					&& !captain.isPlayer()
-					&& ("officer".equals(captain.getPostId())
-						|| captain.isAICore())) {
+					&& !captain.isDefault()) {
 
 				stats.officerCount++;
-				stats.officerLevelSum += captain.getStats().getLevel();
+				stats.officerLevelSum += memberLvl;
 				}
 			}
+			
+		if (stats.officerCount > 0) {
+			stats.avgLvl = (float) stats.officerLevelSum / stats.officerCount;
+			stats.avgLvlformat = String.format("%.2f", stats.avgLvl);
+		}
 
         return stats;
     }
@@ -185,20 +191,20 @@ public class ShowEncounterStatsListener extends BaseCampaignEventListener {
 
         int officerCount = 0;
         int officerLevelSum = 0;
+		
+		float avgLvl = 0f;
+		String avgLvlformat = null;
+		
 
         String[] highlights(boolean countCivShips, boolean showOfficers) {
 
 			int ships = countCivShips ? shipCount : combatShipCount;
 			int deploy = (int) (countCivShips ? totalDP : combatDP);
 
-			float avgLvl = (officerCount > 0)
-				? officerLevelSum / officerCount
-				: 0;
-
 			return new String[] {
 				String.valueOf(ships),
 				showOfficers && officerCount > 0 ? String.valueOf(officerCount) : "",
-				showOfficers && officerCount > 0 ? String.valueOf(avgLvl) : "",
+				showOfficers && officerCount > 0 ? avgLvlformat : "",
 				String.valueOf(deploy),
 				String.valueOf((int) totalFP),
 				civFP > 0 ? String.valueOf((int) civFP) : ""
